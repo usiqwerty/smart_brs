@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "BRS freak",
+  "version": "1.0",
+
+  "description": "Расчёт баллов БРС УрФУ",
+
+  "icons": {
+    "48": "icons/border-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://istudent.urfu.ru/s/http-urfu-ru-ru-students-study-brs"],
+      "js": ["main.js"]
+    }
+  ]
+}
