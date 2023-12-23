@@ -39,7 +39,7 @@ class BRS {
 
 let subject_brs_list=[];
 let ratings = document.querySelectorAll(".js-service-rating-link")
-ratings.forEach((rating_link: HTMLElement)=>{
+for (const rating_link: HTMLElement of ratings) {
     rating_link.click();
     setTimeout(()=>{
         let id = rating_link.id;
@@ -47,14 +47,14 @@ ratings.forEach((rating_link: HTMLElement)=>{
         let class_types = subject.querySelectorAll(".brs-countainer");
 
         let class_types_brs = [];
-        class_types.forEach((class_type)=>{
+        for (const class_type of class_types) {
             let attestations = class_type.querySelectorAll(".brs-slide-pane-cont")
 
             let kuk: HTMLElement =class_type.querySelector(".brs-h4").querySelector(".brs-gray");
             let class_quotient = Number(kuk.innerText);
 
             let attestation_brs=[];
-            attestations.forEach((attestation)=>{
+            for (const attestation of attestations) {
                 let brs_values=attestation.querySelector(".brs-values");
 
                 let buk:HTMLElement =attestation.querySelector(".brs-gray");
@@ -64,18 +64,18 @@ ratings.forEach((rating_link: HTMLElement)=>{
                 if (brs_values)
                 {
                     let tasks = brs_values.querySelectorAll("p");
-                    tasks.forEach((task_tag) => {
+                    for (const task_tag of tasks) {
                         let user_value = Number(task_tag.querySelector("strong").innerText);
                         let name = task_tag.innerText.split("—")[0].trim();
 
                         let max_value = Number(task_tag.innerText.split("из ")[1]);
                         tasks_brs.push(new BRS(name, max_value, user_value));
-                    });
+                    }
                 }
                 attestation_brs.push(new BRS('name', 100, 0, quotient, tasks_brs)); //it should be calculate-able at this point
-            });
+            }
             class_types_brs.push(new BRS("asid", 100, 0, class_quotient, attestation_brs));
-        });
+        }
 
         let the_subj=new BRS("subject"+id, 100, 0, 1, class_types_brs)
         subject_brs_list.push(the_subj);
@@ -85,5 +85,5 @@ ratings.forEach((rating_link: HTMLElement)=>{
         rating_link.click();
 
     }, 1000);
-});
+}
 console.log(subject_brs_list);
