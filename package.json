@@ -1,0 +1,16 @@
+{
+  "name": "smart_brs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.ts",
+  "scripts": {
+    "build": "tsc --outFile out/main.js src/main.ts; cp manifest.json out/manifest.json"
+  },
+  "author": "usiqwerty",
+  "license": "MIT",
+  "dependencies": {
+    "node": "^21.2.0",
+    "npm": "^10.2.5",
+    "typescript": "^5.3.3"
+  }
+}

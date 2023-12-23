@@ -1,4 +1,9 @@
 class BRS {
+    name: string;
+    subratings: BRS[];
+    weight: number;
+    self_maxval: number;
+    self_value: number;
     constructor(name, maxval = 100, self_value = 0, weight = 1,  subs = []) {
         this.name = name;
         this.subratings = subs;
@@ -34,7 +39,7 @@ class BRS {
 
 let subject_brs_list=[];
 let ratings = document.querySelectorAll(".js-service-rating-link")
-ratings.forEach((rating_link)=>{
+ratings.forEach((rating_link: HTMLElement)=>{
     rating_link.click();
     setTimeout(()=>{
         let id = rating_link.id;
@@ -45,22 +50,25 @@ ratings.forEach((rating_link)=>{
         class_types.forEach((class_type)=>{
             let attestations = class_type.querySelectorAll(".brs-slide-pane-cont")
 
-            let class_quotient = Number(class_type.querySelector(".brs-h4").querySelector(".brs-gray").innerText);
+            let kuk: HTMLElement =class_type.querySelector(".brs-h4").querySelector(".brs-gray");
+            let class_quotient = Number(kuk.innerText);
 
             let attestation_brs=[];
             attestations.forEach((attestation)=>{
                 let brs_values=attestation.querySelector(".brs-values");
-                let quotient = Number(attestation.querySelector(".brs-gray").innerText);
+
+                let buk:HTMLElement =attestation.querySelector(".brs-gray");
+                let quotient = Number(buk.innerText);
 
                 let tasks_brs=[];
                 if (brs_values)
                 {
                     let tasks = brs_values.querySelectorAll("p");
                     tasks.forEach((task_tag) => {
-                        let user_value = task_tag.querySelector("strong").innerText;
+                        let user_value = Number(task_tag.querySelector("strong").innerText);
                         let name = task_tag.innerText.split("—")[0].trim();
 
-                        let max_value = task_tag.innerText.split("из ")[1];
+                        let max_value = Number(task_tag.innerText.split("из ")[1]);
                         tasks_brs.push(new BRS(name, max_value, user_value));
                     });
                 }
