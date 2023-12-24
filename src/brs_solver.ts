@@ -5,7 +5,7 @@ class BRS {
     self_maxval: number;
     self_value: number;
 
-    constructor(name: string, maxval = 100, self_value = 0, weight = 1, subs:BRS[] = []) {
+    constructor(name: string, maxval = 100, self_value = 0, weight = 1, subs: BRS[] = []) {
         this.name = name;
         this.subratings = subs;
         this.weight = weight;
@@ -37,5 +37,35 @@ class BRS {
             return this.self_maxval;
         }
     }
+
+    rest() {
+        return this.maxvalue() - this.value();
+        //TODO: add blocked()
+    }
 }
+export class Task{
+    name: string;
+    score: number;
+    constructor(name: string, score: number) {
+        this.name=name;
+        this.score=score;
+    }
+}
+export function rsolve(rating: BRS, increase_target: number): Task[] {
+    //console.log(rating);
+    let sum_rest = rating.rest();
+    if (rating.subratings.length == 0) {
+        const score = Math.min(sum_rest, increase_target);
+        return [new Task(rating.name, score)];
+    }
+
+    let tasks: Task[] = [];
+    for (const sub_rating of rating.subratings as BRS[]) {
+        tasks = tasks.concat(rsolve(sub_rating, increase_target * (sub_rating.rest() / sum_rest)));
+    }
+
+    return tasks;
+
+}
+
 export default BRS;
