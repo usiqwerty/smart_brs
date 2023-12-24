@@ -1,4 +1,4 @@
 /.idea
 /.idea/smart_brs.iml
-/out/*
 /node_modules
+/dist

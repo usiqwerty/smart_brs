@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "CommonJS",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "outDir": "out/"
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "allowJs": true
   },
-  "files": ["src/main.ts"],
+  "files": ["src/main.ts"]
 }

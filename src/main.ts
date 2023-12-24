@@ -2,14 +2,14 @@ import BRS from './brs_solver';
 
 let subject_brs_list: BRS[] = [];
 let ratings= document.querySelectorAll(".js-service-rating-link")
-for (const rating_link of ratings) {
+for (const rating_link of ratings as any) {
 
     //rating_link = rating_link as HTMLElement;
     (rating_link as HTMLElement).click();
     setTimeout(() => {
         let id = rating_link.id;
         let subject = document.querySelector("#info-" + id);
-        let class_types = subject?.querySelectorAll(".brs-countainer") || [];
+        let class_types: any = subject?.querySelectorAll(".brs-countainer") || [];
         let class_types_brs = [];
         for (const class_type of class_types) {
             let attestations = class_type.querySelectorAll(".brs-slide-pane-cont")
