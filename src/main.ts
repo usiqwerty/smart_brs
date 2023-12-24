@@ -1,71 +1,36 @@
-class BRS {
-    name: string;
-    subratings: BRS[];
-    weight: number;
-    self_maxval: number;
-    self_value: number;
-    constructor(name, maxval = 100, self_value = 0, weight = 1,  subs = []) {
-        this.name = name;
-        this.subratings = subs;
-        this.weight = weight;
-        this.self_maxval = maxval;
-        this.self_value = self_value;
-    }
+import BRS from './brs_solver';
 
-    value() {
+let subject_brs_list: BRS[] = [];
+let ratings= document.querySelectorAll(".js-service-rating-link")
+for (const rating_link of ratings) {
 
-        if (this.subratings.length > 0) {
-            let sum = 0;
-            this.subratings.forEach((subrating) => {
-                sum += subrating.value() * subrating.weight;
-            });
-            return sum;
-        } else {
-            return this.self_value;
-        }
-    }
-    maxvalue(){
-        if (this.subratings.length > 0) {
-            let sum = 0;
-            this.subratings.forEach((subrating) => {
-                sum += subrating.maxvalue() * subrating.weight;
-            });
-            return sum;
-        } else {
-            return this.self_maxval;
-        }
-    }
-}
-
-let subject_brs_list=[];
-let ratings = document.querySelectorAll(".js-service-rating-link")
-for (const rating_link: HTMLElement of ratings) {
-    rating_link.click();
-    setTimeout(()=>{
+    //rating_link = rating_link as HTMLElement;
+    (rating_link as HTMLElement).click();
+    setTimeout(() => {
         let id = rating_link.id;
-        let subject = document.querySelector("#info-"+id);
-        let class_types = subject.querySelectorAll(".brs-countainer");
-
+        let subject = document.querySelector("#info-" + id);
+        let class_types = subject?.querySelectorAll(".brs-countainer") || [];
         let class_types_brs = [];
         for (const class_type of class_types) {
             let attestations = class_type.querySelectorAll(".brs-slide-pane-cont")
 
-            let kuk: HTMLElement =class_type.querySelector(".brs-h4").querySelector(".brs-gray");
+            let biba:HTMLElement = class_type.querySelector(".brs-h4") as  HTMLElement;
+            let kuk:HTMLElement = biba.querySelector(".brs-gray") as HTMLElement;
             let class_quotient = Number(kuk.innerText);
 
-            let attestation_brs=[];
+            let attestation_brs = [];
             for (const attestation of attestations) {
-                let brs_values=attestation.querySelector(".brs-values");
+                let brs_values = attestation.querySelector(".brs-values");
 
-                let buk:HTMLElement =attestation.querySelector(".brs-gray");
+                let buk: HTMLElement = attestation.querySelector(".brs-gray") as HTMLElement;
                 let quotient = Number(buk.innerText);
 
-                let tasks_brs=[];
-                if (brs_values)
-                {
+                let tasks_brs = [];
+                if (brs_values) {
                     let tasks = brs_values.querySelectorAll("p");
                     for (const task_tag of tasks) {
-                        let user_value = Number(task_tag.querySelector("strong").innerText);
+                        let thenum = task_tag.querySelector("strong") as HTMLElement;
+                        let user_value = Number(thenum.innerText);
                         let name = task_tag.innerText.split("—")[0].trim();
 
                         let max_value = Number(task_tag.innerText.split("из ")[1]);
@@ -77,12 +42,12 @@ for (const rating_link: HTMLElement of ratings) {
             class_types_brs.push(new BRS("asid", 100, 0, class_quotient, attestation_brs));
         }
 
-        let the_subj=new BRS("subject"+id, 100, 0, 1, class_types_brs)
+        let the_subj = new BRS("subject" + id, 100, 0, 1, class_types_brs)
         subject_brs_list.push(the_subj);
         let score_tag = rating_link.querySelectorAll(".js-service-rating-td")[1];
-        let subject_sum=the_subj.value();
-        score_tag.innerHTML="(по факту "+Number(subject_sum.toFixed(3))+")";
-        rating_link.click();
+        let subject_sum = the_subj.value();
+        score_tag.innerHTML = "(по факту " + Number(subject_sum.toFixed(3)) + ")";
+        (rating_link as HTMLElement).click();
 
     }, 1000);
 }
