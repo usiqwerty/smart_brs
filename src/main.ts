@@ -35,7 +35,6 @@ function superspan() {
                         for (const task_tag of tasks) {
                             let thenum = task_tag.querySelector("strong") as HTMLElement;
                             let user_value = Number(thenum.innerText);
-                            let name = task_tag.innerText.split("—")[0].trim();
 
                             let resultable=document.createElement("span");
                             resultable.id = "task" + counter;
