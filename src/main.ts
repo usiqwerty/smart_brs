@@ -65,7 +65,7 @@ function show_results(tasks: Task[]){
     for (const task of tasks){
         let span = document.getElementById(task.name);
         if (span) {
-            span.innerText = "Нужно набрать ещё " + task.score;
+            span.innerText = "(Нужно набрать ещё " + task.score+")";
         }
     }
 }
